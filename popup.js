@@ -6,7 +6,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
     const contador = document.getElementById('contador-analises');
     
     divResultado.style.display = 'block';
-    textoAnalise.innerHTML = 'Conectando ao cérebro da OpenAI... ⏳<br><br>Isso leva alguns segundos.';
+    textoAnalise.innerHTML = 'A conectar ao cérebro da OpenAI... ⏳<br><br>Isto leva alguns segundos.';
     spanGenial.innerText = '-';
     spanCapivarda.innerText = '-';
 
@@ -60,9 +60,8 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                     }
 
                     // Apenas um efeito visual temporário para o teste: 
-                    // muda o contador para 0/1 após a análise.
-                    contador.innerText = "0/1";
-                    contador.style.color = "#ff4444";
+                    // muda o contador para 2/3 após a primeira análise.
+                    contador.innerText = "2/3";
 
                 } else {
                     textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro ao analisar. Verifique se a chave da OpenAI está correta ou se tem saldo.</span>';
@@ -73,15 +72,15 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
             }
 
         } else {
-            textoAnalise.innerHTML = '<span style="color: #ff4444;">Nenhuma partida encontrada. Abra uma partida finalizada no Lichess e clique no botão verde na tela.</span>';
+            textoAnalise.innerHTML = '<span style="color: #ff4444;">Nenhuma partida encontrada. Abra uma partida finalizada no Lichess e clique no botão verde no ecrã.</span>';
         }
     });
 });
 
 document.getElementById('btn-upgrade').addEventListener('click', () => {
-    alert('Plano VIP: R$ 14,90 por 60 análises no 1º mês, e 100 análises a partir da renovação!\n\n(O sistema de pagamento do Mercado Pago será ativado na Fase 2)');
+    alert('👑 PLANO VIP (R$ 14,90 / mês)\n\n• 1º Mês: 60 análises (sem limite diário)\n• Recompensa de Fidelidade: A partir da 2ª assinatura, recebe 100 análises por mês pelo mesmo valor!\n\n(O sistema de pagamento do Mercado Pago será ativado na Fase 2)');
 });
 
 document.getElementById('btn-exportar').addEventListener('click', () => {
-    alert('Em breve: Gerando imagem bonita para postar no Instagram!');
+    alert('Em breve: A gerar imagem bonita para publicar no Instagram!');
 });
