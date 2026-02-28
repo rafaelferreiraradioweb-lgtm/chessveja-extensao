@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Chessveja IA",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Análise mestre de xadrez com Inteligência Artificial.",
   "permissions": ["activeTab", "scripting", "identity", "storage"],
   "oauth2": {
-    "client_id": "165782355017-8il61oihum1p9r3cnamue60orh67e959.apps.googleusercontent.com",
+    "client_id": "165782355017-ic998rpi5ufpu3pcuscol7ce0rf9ig8t.apps.googleusercontent.com",
     "scopes": ["openid", "email", "profile"]
   },
   "action": {
