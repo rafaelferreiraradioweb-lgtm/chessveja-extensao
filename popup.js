@@ -16,7 +16,8 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
 
             try {
                 // ======== CONEXÃO COM SEU SERVIDOR SEGURO NA VERCEL ========
-                const API_URL = 'https://chessveja-mxrv51uit-rafael-ferreiras-projects-954d2e34.vercel.app/api/analisar';
+                // Rota corrigida, terminando apenas em /api
+                const API_URL = 'https://chessveja-mxrv51uit-rafael-ferreiras-projects-954d2e34.vercel.app/api';
                 
                 const iaResponse = await fetch(API_URL, {
                     method: 'POST',
@@ -44,7 +45,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                         textoAnalise.innerHTML = respostaTexto.replace(/\n/g, '<br>');
                     }
 
-                    // Apenas um efeito visual temporário para o teste
+                    // Efeito visual temporário para o teste
                     contador.innerText = "2/3";
 
                 } else {
