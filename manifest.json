@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Chessveja IA",
-  "version": "1.2",
+  "version": "1.5",
   "description": "Análise mestre de xadrez com Inteligência Artificial.",
   "permissions": ["activeTab", "scripting", "identity", "storage"],
   "oauth2": {
