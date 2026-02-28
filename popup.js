@@ -16,8 +16,8 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
 
             try {
                 // ======== CONEXÃO COM SEU SERVIDOR SEGURO NA VERCEL ========
-                // Rota corrigida, terminando apenas em /api
-                const API_URL = 'https://chessveja-mxrv51uit-rafael-ferreiras-projects-954d2e34.vercel.app/api';
+                // Link OFICIAL e permanente do seu servidor
+                const API_URL = 'https://chessveja-api.vercel.app/api';
                 
                 const iaResponse = await fetch(API_URL, {
                     method: 'POST',
@@ -45,7 +45,6 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                         textoAnalise.innerHTML = respostaTexto.replace(/\n/g, '<br>');
                     }
 
-                    // Efeito visual temporário para o teste
                     contador.innerText = "2/3";
 
                 } else {
@@ -53,7 +52,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                 }
 
             } catch (error) {
-                textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro de conexão com o servidor do Chessveja.</span>';
+                textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro de conexão com o servidor do Chessveja. O link ou as permissões foram bloqueadas.</span>';
             }
 
         } else {
