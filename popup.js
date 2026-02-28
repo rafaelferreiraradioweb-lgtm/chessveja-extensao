@@ -5,7 +5,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
     const spanCapivara = document.getElementById('qtd-capivarda');
     
     divResultado.style.display = 'block';
-    textoAnalise.innerHTML = 'O mestre Chessveja está analisando os momentos críticos... ⏳';
+    textoAnalise.innerHTML = 'Mestre Chessveja localizando erros... ⏳';
     spanGenial.innerText = '-';
     spanCapivarda.innerText = '-';
 
@@ -27,31 +27,26 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                     const geniais = texto.match(/GENIAIS:\s*(\d+)/i);
                     const capivaras = texto.match(/CAPIVARAS:\s*(\d+)/i);
                     
-                    // Pega o texto após o número de capivaras
+                    // Pega o conteúdo após a contagem de capivaras
                     const analiseCompleta = texto.split(/CAPIVARAS:\s*\d+/i)[1] || texto;
 
                     spanGenial.innerText = geniais ? geniais[1] : '0';
                     spanCapivarda.innerText = capivaras ? capivaras[1] : '0';
                     
-                    // Formata os títulos em negrito
+                    // Formatação bonita dos títulos
                     textoAnalise.innerHTML = analiseCompleta
                         .trim()
                         .replace(/\n/g, '<br>')
-                        .replace(/(3 MOMENTOS CRÍTICOS:|PLANOS ESTRATÉGICOS:|CONCLUSÃO:)/g, '<strong>$1</strong>');
+                        .replace(/(3 PIORES LANCES:|PLANOS GERAIS:)/g, '<strong>$1</strong>');
 
-                    // Ativa o contador visual temporário
                     document.getElementById('contador-analises').innerText = "2/3";
 
                 } else {
-                    textoAnalise.innerHTML = 'Erro ao processar análise.';
+                    textoAnalise.innerHTML = 'Erro na resposta do servidor.';
                 }
             } catch (e) {
-                textoAnalise.innerHTML = 'Erro de conexão com o servidor.';
+                textoAnalise.innerHTML = 'Erro de conexão.';
             }
         }
     });
-});
-
-document.getElementById('btn-upgrade').addEventListener('click', () => {
-    alert('👑 PLANO VIP (R$ 14,90 / mês)\n\n• 60 análises no 1º mês\n• 100 análises na renovação!');
 });
