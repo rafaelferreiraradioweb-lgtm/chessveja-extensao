@@ -3,6 +3,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
     const textoAnalise = document.getElementById('texto-analise');
     const spanGenial = document.getElementById('qtd-genial');
     const spanCapivarda = document.getElementById('qtd-capivarda');
+    const contador = document.getElementById('contador-analises');
     
     divResultado.style.display = 'block';
     textoAnalise.innerHTML = 'Conectando ao cérebro da OpenAI... ⏳<br><br>Isso leva alguns segundos.';
@@ -14,7 +15,6 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
             const pgn = response.pgn;
 
             // ============== CHAVE DA OPENAI ==============
-            // APAGUE O TEXTO COLE_SUA_CHAVE_AQUI E COLE A SUA CHAVE DENTRO DAS ASPAS
             const OPENAI_API_KEY = "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"; 
             // =============================================
 
@@ -59,6 +59,11 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                         textoAnalise.innerHTML = respostaTexto.replace(/\n/g, '<br>');
                     }
 
+                    // Apenas um efeito visual temporário para o teste: 
+                    // muda o contador para 0/1 após a análise.
+                    contador.innerText = "0/1";
+                    contador.style.color = "#ff4444";
+
                 } else {
                     textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro ao analisar. Verifique se a chave da OpenAI está correta ou se tem saldo.</span>';
                 }
@@ -74,7 +79,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
 });
 
 document.getElementById('btn-upgrade').addEventListener('click', () => {
-    alert('Em breve: Redirecionando para o pagamento seguro do Mercado Pago...');
+    alert('Plano VIP: R$ 14,90 por 60 análises no 1º mês, e 100 análises a partir da renovação!\n\n(O sistema de pagamento do Mercado Pago será ativado na Fase 2)');
 });
 
 document.getElementById('btn-exportar').addEventListener('click', () => {
