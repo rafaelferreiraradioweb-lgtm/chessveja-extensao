@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Chessveja - Analisador AI",
+  "version": "1.0",
+  "description": "Análise de xadrez com IA direto no Lichess. Plano Gratuito e VIP.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Abrir Analisador Chessveja"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.lichess.org/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.lichess.org/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
