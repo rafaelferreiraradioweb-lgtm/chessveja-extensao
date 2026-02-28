@@ -9,6 +9,14 @@
     "identity",
     "storage"
   ],
+  "oauth2": {
+    "client_id": "165782355017-8il61oihum1p9r3cnamue60orh67e959.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon.png"
