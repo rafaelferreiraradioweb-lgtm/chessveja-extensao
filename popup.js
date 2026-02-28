@@ -2,12 +2,12 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
     const divResultado = document.getElementById('resultado');
     const textoAnalise = document.getElementById('texto-analise');
     const spanGenial = document.getElementById('qtd-genial');
-    const spanCapivarada = document.getElementById('qtd-capivarada'); // ID do HTML permanece o mesmo, mas o rótulo muda
+    const spanCapivara = document.getElementById('qtd-capivarda');
     
     divResultado.style.display = 'block';
-    textoAnalise.innerHTML = 'O mestre Chessveja está analisando sua partida... ⏳';
+    textoAnalise.innerHTML = 'O mestre Chessveja está analisando os momentos críticos... ⏳';
     spanGenial.innerText = '-';
-    spanCapivarada.innerText = '-';
+    spanCapivarda.innerText = '-';
 
     chrome.runtime.sendMessage({ action: "obterPGN" }, async (response) => {
         if (response && response.pgn) {
@@ -24,28 +24,34 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                 if (data.resultado) {
                     const texto = data.resultado;
 
-                    // Pesca os números e as seções (atualizado para CAPIVARADAS)
                     const geniais = texto.match(/GENIAIS:\s*(\d+)/i);
-                    const capivaradas = texto.match(/CAPIVARADAS:\s*(\d+)/i);
+                    const capivaras = texto.match(/CAPIVARAS:\s*(\d+)/i);
                     
-                    // Pega tudo que vem depois de "CAPIVARADAS: X"
-                    const analiseCompleta = texto.split(/CAPIVARADAS:\s*\d+/i)[1] || texto;
+                    // Pega o texto após o número de capivaras
+                    const analiseCompleta = texto.split(/CAPIVARAS:\s*\d+/i)[1] || texto;
 
                     spanGenial.innerText = geniais ? geniais[1] : '0';
-                    spanCapivara.innerText = capivaradas ? capivaradas[1] : '0';
+                    spanCapivarda.innerText = capivaras ? capivaras[1] : '0';
                     
-                    // Exibe a análise com formatação bonita
+                    // Formata os títulos em negrito
                     textoAnalise.innerHTML = analiseCompleta
                         .trim()
                         .replace(/\n/g, '<br>')
-                        .replace(/(TEORIA E ABERTURA:|ANÁLISE LANCE A LANCE:|PLANOS ESTRATÉGICOS:|CONCLUSÃO:)/g, '<strong>$1</strong>');
+                        .replace(/(3 MOMENTOS CRÍTICOS:|PLANOS ESTRATÉGICOS:|CONCLUSÃO:)/g, '<strong>$1</strong>');
+
+                    // Ativa o contador visual temporário
+                    document.getElementById('contador-analises').innerText = "2/3";
 
                 } else {
-                    textoAnalise.innerHTML = 'Erro na análise.';
+                    textoAnalise.innerHTML = 'Erro ao processar análise.';
                 }
             } catch (e) {
                 textoAnalise.innerHTML = 'Erro de conexão com o servidor.';
             }
         }
     });
+});
+
+document.getElementById('btn-upgrade').addEventListener('click', () => {
+    alert('👑 PLANO VIP (R$ 14,90 / mês)\n\n• 60 análises no 1º mês\n• 100 análises na renovação!');
 });
