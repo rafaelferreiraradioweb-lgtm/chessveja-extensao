@@ -19,12 +19,12 @@ document.getElementById('btn-login').addEventListener('click', () => {
     chrome.runtime.sendMessage({ action: "login" }, (response) => {
         if (response && response.success) {
             usuarioLogado = response.user;
-            document.getElementById('secao-login').style.display = 'none';
+            document.getElementById('btn-login').style.display = 'none';
             document.getElementById('user-info').style.display = 'block';
             document.getElementById('user-info').innerText = `Olá, ${usuarioLogado.given_name}! 👋`;
             verificarLimite();
         } else {
-            alert("Erro ao entrar com o Google. Tente novamente.");
+            alert("Erro ao entrar com o Google. Certifique-se de que você é um usuário de teste no Console Google.");
         }
     });
 });
