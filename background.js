@@ -1,20 +1,26 @@
+// Ouvinte de mensagens da extensão
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  
+  // Ação de Login com Google
   if (request.action === "login") {
-    // Tenta pegar o token do Google de forma interativa
     chrome.identity.getAuthToken({ interactive: true }, function(token) {
       if (chrome.runtime.lastError || !token) {
-        sendResponse({ success: false, error: chrome.runtime.lastError });
+        console.error("Erro de Identidade:", chrome.runtime.lastError);
+        sendResponse({ success: false, error: "Não foi possível obter o token de acesso." });
         return;
       }
       
-      // Com o token, buscamos o nome e e-mail do usuário
+      // Busca os dados básicos do perfil do usuário (Nome, Foto, Email)
       fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`)
         .then(res => res.json())
         .then(user => {
           sendResponse({ success: true, user: user });
         })
-        .catch(err => sendResponse({ success: false, error: err }));
+        .catch(err => {
+          console.error("Erro ao buscar perfil:", err);
+          sendResponse({ success: false, error: "Erro ao conectar com a API do Google." });
+        });
     });
-    return true; // Mantém o canal de resposta aberto
+    return true; // Mantém o canal aberto para resposta assíncrona
   }
 });
