@@ -6,7 +6,7 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
     const contador = document.getElementById('contador-analises');
     
     divResultado.style.display = 'block';
-    textoAnalise.innerHTML = 'A conectar ao cérebro da OpenAI... ⏳<br><br>Isto leva alguns segundos.';
+    textoAnalise.innerHTML = 'Conectando ao servidor seguro do Chessveja... ⏳<br><br>Isso leva alguns segundos.';
     spanGenial.innerText = '-';
     spanCapivarda.innerText = '-';
 
@@ -14,37 +14,22 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
         if (response && response.pgn) {
             const pgn = response.pgn;
 
-            // ============== CHAVE DA OPENAI ==============
-            const OPENAI_API_KEY = "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"; 
-            // =============================================
-
-            const prompt = `Analise a seguinte partida de xadrez em PGN.
-            Você deve responder EXATAMENTE neste formato:
-            GENIAIS: [número de lances muito bons ou brilhantes]
-            CAPIVARDAS: [número de erros graves ou blunders]
-            ANÁLISE: [Sua análise detalhada, amigável e didática, explicando os momentos críticos, os erros e sugerindo lances melhores. Fale diretamente com o jogador em português].
-
-            PGN da partida:
-            ${pgn}`;
-
             try {
-                const iaResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+                // ======== CONEXÃO COM SEU SERVIDOR SEGURO NA VERCEL ========
+                const API_URL = 'https://chessveja-mxrv51uit-rafael-ferreiras-projects-954d2e34.vercel.app/api/analisar';
+                
+                const iaResponse = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENAI_API_KEY}`
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        model: "gpt-3.5-turbo", 
-                        messages: [{ role: "user", content: prompt }],
-                        temperature: 0.7
-                    })
+                    body: JSON.stringify({ pgn: pgn })
                 });
 
                 const data = await iaResponse.json();
 
-                if (data.choices && data.choices.length > 0) {
-                    const respostaTexto = data.choices[0].message.content;
+                if (data.resultado) {
+                    const respostaTexto = data.resultado;
 
                     const matchGeniais = respostaTexto.match(/GENIAIS:\s*(\d+)/i);
                     const matchCapivardas = respostaTexto.match(/CAPIVARDAS:\s*(\d+)/i);
@@ -59,20 +44,19 @@ document.getElementById('btn-analisar').addEventListener('click', () => {
                         textoAnalise.innerHTML = respostaTexto.replace(/\n/g, '<br>');
                     }
 
-                    // Apenas um efeito visual temporário para o teste: 
-                    // muda o contador para 2/3 após a primeira análise.
+                    // Apenas um efeito visual temporário para o teste
                     contador.innerText = "2/3";
 
                 } else {
-                    textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro ao analisar. Verifique se a chave da OpenAI está correta ou se tem saldo.</span>';
+                    textoAnalise.innerHTML = '<span style="color: #ff4444;">' + (data.erro || 'Erro ao analisar a partida.') + '</span>';
                 }
 
             } catch (error) {
-                textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro de conexão com a OpenAI.</span>';
+                textoAnalise.innerHTML = '<span style="color: #ff4444;">Erro de conexão com o servidor do Chessveja.</span>';
             }
 
         } else {
-            textoAnalise.innerHTML = '<span style="color: #ff4444;">Nenhuma partida encontrada. Abra uma partida finalizada no Lichess e clique no botão verde no ecrã.</span>';
+            textoAnalise.innerHTML = '<span style="color: #ff4444;">Nenhuma partida encontrada. Abra uma partida finalizada no Lichess e clique no botão verde na tela.</span>';
         }
     });
 });
@@ -82,5 +66,5 @@ document.getElementById('btn-upgrade').addEventListener('click', () => {
 });
 
 document.getElementById('btn-exportar').addEventListener('click', () => {
-    alert('Em breve: A gerar imagem bonita para publicar no Instagram!');
+    alert('Em breve: Gerando imagem bonita para postar no Instagram!');
 });
