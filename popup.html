@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 320px;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 15px;
+        }
+        h2 {
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+        .status-conta {
+            background-color: #1e1e1e;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        button:hover { background-color: #45a049; }
+        
+        .btn-upgrade { background-color: #009ee3; }
+        .btn-upgrade:hover { background-color: #0088c4; }
+
+        .btn-exportar {
+            background-color: #d4af37;
+            color: #000;
+        }
+
+        /* Termômetro de Capivardas */
+        .termometro {
+            display: flex;
+            justify-content: space-between;
+            background: #252525;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .genial { color: #00bfff; }
+        .capivarda { color: #ff4444; }
+
+    </style>
+</head>
+<body>
+
+    <h2>♟️ Chessveja IA</h2>
+    
+    <div class="status-conta">
+        Plano atual: <strong>Gratuito</strong><br>
+        Análises restantes: <strong>5/5</strong>
+    </div>
+
+    <button id="btn-upgrade" class="btn-upgrade">👑 Ser VIP (30 Análises - R$ 12,90)</button>
+    <button id="btn-analisar">Analisar Partida Atual</button>
+
+    <div id="resultado" style="display: none; margin-top: 15px;">
+        <div class="termometro">
+            <span class="genial">🌟 Geniais: <span id="qtd-genial">0</span></span>
+            <span class="capivarda">🐴 Capivardas: <span id="qtd-capivarda">0</span></span>
+        </div>
+        <div id="texto-analise" style="background: #1e1e1e; padding: 10px; border-radius: 5px; font-size: 0.85rem; margin-bottom: 10px;">
+            Aguardando análise...
+        </div>
+        <button id="btn-exportar" class="btn-exportar">📸 Exportar Resumo</button>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
