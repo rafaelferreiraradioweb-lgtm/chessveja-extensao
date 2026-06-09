@@ -1,23 +1,20 @@
 {
   "manifest_version": 3,
-  "name": "Chessveja IA - Analisador Lichess",
-  "version": "2.0",
-  "description": "Análise mestre de xadrez com IA direto no Lichess.",
-  "permissions": ["activeTab", "scripting"],
-  "host_permissions": [
-    "https://lichess.org/*", 
-    "https://chessveja-site.vercel.app/*"
+  "name": "Analisador Chessveja AI para Lichess",
+  "version": "1.0",
+  "description": "Analisador com IA nível GM.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "sidePanel"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
-    "default_popup": "popup.html"
+    "default_title": "Abrir Analisador"
   },
-  "icons": {
-    "128": "icon.png"
-  },
-  "content_scripts": [
-    {
-      "matches": ["https://lichess.org/*"],
-      "js": ["content.js"]
-    }
-  ]
+  "side_panel": {
+    "default_path": "popup.html"
+  }
 }
