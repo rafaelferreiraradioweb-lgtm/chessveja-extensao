@@ -1,24 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <style>
-        body { width: 300px; padding: 15px; background: #1e1e1e; color: white; font-family: sans-serif; }
-        h2 { color: #d4af37; text-align: center; }
-        select, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: none; }
-        button { background: #d4af37; font-weight: bold; cursor: pointer; }
-        #result { margin-top: 15px; font-size: 0.9rem; border-left: 3px solid #d4af37; padding-left: 10px; max-height: 200px; overflow-y: auto; }
-    </style>
-</head>
-<body>
-    <h2>♟️ Chessveja IA</h2>
-    <select id="level">
-        <option value="iniciante">Iniciante</option>
-        <option value="intermediario">Intermediário</option>
-        <option value="avancado">Avançado</option>
-    </select>
-    <button id="btn-analisar">Analisar Agora</button>
-    <div id="result">Aguardando análise...</div>
-    <script src="popup.js"></script>
-</body>
-</html>
+document.getElementById('btn-analisar').addEventListener('click', async () => {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = "Analisando a partida no nível Grande Mestre... ⏳<br><small>Aguarde, extraindo momentos críticos.</small>";
+
+    // Busca a aba do Lichess (funciona perfeitamente no Painel Lateral)
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    
+    if (!tab || !tab.url || !tab.url.includes("lichess.org")) {
+        resultDiv.innerHTML = "<strong>Erro:</strong> Você precisa estar na aba do Lichess.";
+        return;
+    }
+
+    // Extrai o ID da partida diretamente do link (ignorando páginas como 'analysis')
+    const urlMatch = tab.url.match(/lichess\.org\/([a-zA-Z0-9]{8})/);
+    const palavrasInvalidas = ['analysis', 'training', 'practice', 'study'];
+    
+    let gameId = null;
+    if (urlMatch && !palavrasInvalidas.includes(urlMatch[1])) {
+        gameId = urlMatch[1];
+    }
+
+    if (!gameId) {
+        resultDiv.innerHTML = "<strong>Erro:</strong> Por favor, abra uma partida finalizada no Lichess.";
+        return;
+    }
+
+    try {
+        const pgnRes = await fetch(`https://lichess.org/game/export/${gameId}`);
+        if (!pgnRes.ok) throw new Error("Partida não encontrada");
+        
+        const pgn = await pgnRes.text();
+
+        const apiRes = await fetch('https://chessveja-site.vercel.app/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                pgn, 
+                level: document.getElementById('level').value,
+                type: 'summary' 
+            })
+        });
+
+        const data = await apiRes.json();
+        
+        if (data.analysis) {
+            let textoFormatado = data.analysis;
+            textoFormatado = textoFormatado.replace(/\n/g, '<br>');
+            textoFormatado = textoFormatado.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            textoFormatado = textoFormatado.replace(/\[(.*?)\]\((.*?)\)/g, '<br><br><a href="$2" target="_blank" style="display: inline-block; background-color: #2ecc71; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; text-align: center; width: 100%; box-sizing: border-box;">📱 $1</a>');
+            
+            resultDiv.innerHTML = textoFormatado;
+        } else {
+            resultDiv.innerHTML = "Erro na análise. Tente novamente.";
+        }
+    } catch (err) {
+        resultDiv.innerHTML = "<strong>Erro de conexão.</strong> Verifique sua internet ou tente mais tarde.";
+    }
+});
