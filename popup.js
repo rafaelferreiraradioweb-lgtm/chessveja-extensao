@@ -3,6 +3,7 @@ document.getElementById('btn-analisar').addEventListener('click', async () => {
     resultDiv.innerHTML = "Iniciando diagnóstico... ⏳";
 
     try {
+        // Busca a aba atual de forma 100% segura para Painéis Laterais
         const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
         const tab = tabs[0];
         
@@ -11,11 +12,13 @@ document.getElementById('btn-analisar').addEventListener('click', async () => {
             return;
         }
 
+        // Lê links do Lichess que tenham entre 8 e 12 letras/números
         const urlMatch = tab.url.match(/lichess\.org\/([a-zA-Z0-9]{8,12})/);
         const palavrasInvalidas = ['analysis', 'training', 'practice', 'study'];
         
         let gameId = null;
         if (urlMatch && !palavrasInvalidas.includes(urlMatch[1])) {
+            // O Lichess só precisa das 8 primeiras letras para puxar a partida
             gameId = urlMatch[1].substring(0, 8); 
         }
 
@@ -42,7 +45,18 @@ document.getElementById('btn-analisar').addEventListener('click', async () => {
         const data = await apiRes.json();
         
         if (data.analysis) {
-            resultDiv.innerHTML = data.analysis.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            let textoFormatado = data.analysis;
+            
+            // 1. Converte as quebras de linha
+            textoFormatado = textoFormatado.replace(/\n/g, '<br>');
+            
+            // 2. Converte o texto em negrito
+            textoFormatado = textoFormatado.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            
+            // 3. Converte o link do WhatsApp num botão verde premium estilizado
+            textoFormatado = textoFormatado.replace(/\[(.*?)\]\((.*?)\)/g, '<br><br><a href="$2" target="_blank" style="display: inline-block; background-color: #25D366; color: white; padding: 12px 15px; text-decoration: none; border-radius: 8px; font-weight: bold; text-align: center; width: 100%; box-sizing: border-box; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">📱 $1</a><br>');
+            
+            resultDiv.innerHTML = textoFormatado;
         } else {
             resultDiv.innerHTML = "<strong>Erro:</strong> A IA não enviou o texto do diagnóstico.";
         }
