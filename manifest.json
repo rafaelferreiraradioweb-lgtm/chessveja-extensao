@@ -1,8 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Analisador Chessveja AI para Lichess",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Analisador com IA nível GM.",
+  "icons": {
+    "128": "icon.png"
+  },
   "permissions": [
     "activeTab",
     "scripting",
@@ -12,7 +15,8 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Abrir Analisador"
+    "default_title": "Abrir Analisador",
+    "default_icon": "icon.png"
   },
   "side_panel": {
     "default_path": "popup.html"
