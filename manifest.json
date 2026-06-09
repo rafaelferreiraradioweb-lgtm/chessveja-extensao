@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Analisador Chessveja AI para Lichess",
-  "version": "1.1",
+  "name": "Diagnóstico do Chessveja",
+  "version": "1.2",
   "description": "Analisador com IA nível GM.",
   "icons": {
     "16": "icon.png",
@@ -9,6 +9,7 @@
     "128": "icon.png"
   },
   "permissions": [
+    "tabs",
     "activeTab",
     "scripting",
     "sidePanel"
@@ -17,7 +18,7 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Abrir Analisador",
+    "default_title": "Abrir Diagnóstico",
     "default_icon": {
       "16": "icon.png",
       "48": "icon.png",
