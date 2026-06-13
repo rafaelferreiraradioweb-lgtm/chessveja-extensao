@@ -1,35 +1,18 @@
 {
   "manifest_version": 3,
   "name": "Diagnóstico do Chessveja",
-  "version": "1.3",
-  "description": "Analisador com IA nível GM.",
-  "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
-  },
+  "version": "1.4",
+  "description": "Analise suas partidas do Lichess com IA.",
   "permissions": [
-    "tabs",
-    "activeTab",
-    "scripting",
-    "sidePanel"
+    "tabs"
   ],
   "host_permissions": [
-    "https://lichess.org/*",
-    "https://chessveja-site.vercel.app/*"
+    "*://lichess.org/*"
   ],
-  "background": {
-    "service_worker": "background.js"
-  },
   "action": {
-    "default_title": "Abrir Diagnóstico",
-    "default_icon": {
-      "16": "icon.png",
-      "48": "icon.png",
-      "128": "icon.png"
-    }
+    "default_popup": "popup.html"
   },
-  "side_panel": {
-    "default_path": "popup.html"
+  "icons": {
+    "128": "icon.png"
   }
 }
