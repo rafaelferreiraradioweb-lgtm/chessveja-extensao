@@ -1,0 +1,14 @@
+#painel-lateral-ajustes {
+    position: fixed;
+    right: 0; 
+    top: 0; 
+    width: 320px; 
+    height: 100%;
+    background: #1e1e1e; 
+    color: #fff;
+    z-index: 99999; 
+    border-left: 2px solid #555;
+    padding: 15px; 
+    box-shadow: -2px 0 10px rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
