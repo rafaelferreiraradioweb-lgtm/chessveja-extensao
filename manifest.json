@@ -5,11 +5,17 @@
   "description": "Gere laudos técnicos inteligentes das suas partidas diretamente no Lichess.",
   "permissions": ["sidePanel", "activeTab", "storage"],
   "host_permissions": ["*://*.lichess.org/*"],
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Abrir Diagnóstico Chessveja"
+    "default_title": "Abrir Diagnóstico Chessveja",
+    "default_icon": "icon.png"
   },
   "side_panel": {
     "default_path": "sidepanel.html"
